@@ -34,8 +34,8 @@
     </licenses>
 
     <properties>
-        <maven.compiler.source>8</maven.compiler.source>
-        <maven.compiler.target>8</maven.compiler.target>
+        <maven.compiler.source>16</maven.compiler.source>
+        <maven.compiler.target>16</maven.compiler.target>
     </properties>
 
     <modules>
@@ -65,4 +65,12 @@
             </resource>
         </resources>
     </build>
+
+    <distributionManagement>
+        <repository>
+            <id>nRepo</id>
+            <url>https://mvn.nucker.me
+            </url>
+        </repository>
+    </distributionManagement>
 </project>

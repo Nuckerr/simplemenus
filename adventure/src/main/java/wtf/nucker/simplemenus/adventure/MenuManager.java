@@ -10,8 +10,6 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.event.inventory.InventoryCloseEvent;
 import org.bukkit.plugin.Plugin;
-import sun.plugin.dom.exception.InvalidStateException;
-
 import java.util.HashMap;
 import java.util.Map;
 import java.util.UUID;
@@ -42,7 +40,7 @@ public class MenuManager {
             //noinspection ConstantConditions
             if(Player.class.getMethod("sendMessage", Component.class) == null) {
                 Bukkit.getLogger().log(Level.SEVERE, "Unable to load simple menus because you are not running on paper/a support paper fork");
-                throw new InvalidStateException("Running on a unsupported plugin jar");
+                throw new IllegalStateException("Running on a unsupported plugin jar");
             }
         } catch (NoSuchMethodException e) {
             e.printStackTrace();
@@ -50,7 +48,7 @@ public class MenuManager {
 
         if(!(this.getSubVersion() >= 16)) {
             Bukkit.getLogger().log(Level.SEVERE, "Unable to load simple menus because you are using the adventure api on a unsupported version");
-            throw new InvalidStateException("Running on unsupported version");
+            throw new IllegalStateException("Running on unsupported version");
         }
 
         this.settings = new MenuSettings();
