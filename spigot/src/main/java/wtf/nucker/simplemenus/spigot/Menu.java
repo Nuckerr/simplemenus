@@ -59,10 +59,24 @@ public class Menu {
     /**
      * Opens the menu
      * @param p player
+     * @deprecated Using this when a menu is already open duplicates their place in the `Open Menus` map. Use {@link Menu#switchMenu(Player)}
      */
     public void open(Player p) {
         p.openInventory(this.inventory);
         MenuManager.getInstance().getOpenMenus().put(p, this);
+    }
+
+    /**
+     * Allows you to open a different menu without duplicating their state in map of open menus
+     * (If the player is not already in a menu, it will just open normally)
+     * @param p player
+     */
+    public void switchMenu(Player p) {
+        if(MenuManager.getInstance().getOpenMenus().containsKey(p)) {
+            p.openInventory(this.getInventory());
+        }else {
+            this.open(p);
+        }
     }
 
     /**
