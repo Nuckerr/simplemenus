@@ -10,9 +10,8 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.event.inventory.InventoryCloseEvent;
 import org.bukkit.plugin.Plugin;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.UUID;
+
+import java.util.*;
 import java.util.logging.Level;
 
 /**
@@ -79,12 +78,13 @@ public class MenuManager {
             public void onClose(InventoryCloseEvent e) {
                 if (e.getPlayer() instanceof Player) {
                     Player player = (Player) e.getPlayer();
+                    List<Player> removedPlayers = new ArrayList<>();
                     openMenus.forEach(((p, menu) -> {
                         if (p == player && e.getInventory().equals(menu.getInventory())) {
                             if(!menu.isClosable()) {
                                 if(menu.isClosing()) {
                                     menu.closeEvent.accept(e);
-                                    openMenus.remove(player);
+                                    removedPlayers.add(player);
                                 }else {
                                     menu.open(player);
                                 }
@@ -92,9 +92,12 @@ public class MenuManager {
                             }
                             menu.setClosing(true);
                             menu.closeEvent.accept(e);
-                            openMenus.remove(player);
+                            removedPlayers.add(player);
                         }
                     }));
+                    for (Player removedPlayer : removedPlayers) {
+                        openMenus.remove(removedPlayer);
+                    }
                 }
             }
         };
