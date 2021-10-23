@@ -87,12 +87,26 @@ public class Menu {
         this.closeEvent = consumer;
     }
 
+
+    /**
+     * Will fill the menu with the given item
+     * @param item the item you want to fill with
+     * @param condition the slot conditions. Return false to not fill that slot
+     */
+    public void fillMenu(ItemStack item, SlotCondition condition) {
+        for (int i = 0; i < inventory.getSize(); i++) {
+            if (inventory.getItem(i) == null || inventory.getItem(i).getType().equals(Material.AIR)) {
+                if(condition.getCondition(i)) inventory.setItem(i, item);
+            }
+        }
+    }
+
     /**
      * Will fill the menu with the default filler item
      * @see MenuSettings#getDefaultFillerItem()
      */
     public void fillMenu() {
-        this.fillMenu(MenuManager.getInstance().getSettings().getDefaultFillerItem());
+        this.fillMenu(c -> true);
     }
 
     /**
@@ -100,7 +114,7 @@ public class Menu {
      * @param material The specified material
      */
     public void fillMenu(Material material) {
-        this.fillMenu(new ItemStack(material));
+        this.fillMenu(material, c -> true);
     }
 
     /**
@@ -117,11 +131,24 @@ public class Menu {
      * @param item the item you are filling
      */
     public void fillMenu(ItemStack item) {
-        for (int i = 0; i < inventory.getSize(); i++) {
-            if (inventory.getItem(i) == null || inventory.getItem(i).getType().equals(Material.AIR)) {
-                inventory.setItem(i, item);
-            }
-        }
+        this.fillMenu(item, c -> true);
+    }
+
+    /**
+     * Fills menu with default item with condition
+     * @param condition weather it should fill with given slot
+     */
+    public void fillMenu(SlotCondition condition) {
+        this.fillMenu(MenuManager.getInstance().getSettings().getDefaultFillerItem(), condition);
+    }
+
+    /**
+     * Fills menu with given material
+     * @param material the material you want to use
+     * @param condition condition on weather a slot should be ignored or not
+     */
+    public void fillMenu(Material material, SlotCondition condition) {
+        this.fillMenu(new ItemStack(material), condition);
     }
 
     /**
@@ -238,5 +265,9 @@ public class Menu {
 
     protected void setClosing(boolean state) {
         this.closing = state;
+    }
+
+    public interface SlotCondition {
+        boolean getCondition(int slot);
     }
 }
