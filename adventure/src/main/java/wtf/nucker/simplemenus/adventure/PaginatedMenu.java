@@ -16,7 +16,7 @@ public abstract class PaginatedMenu extends Menu {
 
     private final int spaces;
     private List<ItemStack> items;
-    private final int totalPages;
+    private int totalPages;
     private int page = 0;
 
     /**
@@ -101,6 +101,7 @@ public abstract class PaginatedMenu extends Menu {
      */
     public void setItems(List<ItemStack> items) {
         this.items = items;
+        this.totalPages = (int) Math.ceil((double) this.items.size() / this.spaces);
     }
 
     /**

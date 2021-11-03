@@ -15,7 +15,7 @@ public abstract class PaginatedMenu extends Menu {
 
     private final int spaces;
     private List<ItemStack> items;
-    private final int totalPages;
+    private int totalPages;
     private int page = 0;
 
     /**
@@ -100,6 +100,7 @@ public abstract class PaginatedMenu extends Menu {
      */
     public void setItems(List<ItemStack> items) {
         this.items = items;
+        this.totalPages = (int) Math.ceil((double) this.items.size() / this.spaces);
     }
 
     /**
@@ -110,6 +111,12 @@ public abstract class PaginatedMenu extends Menu {
     @Override
     public void open(Player p) {
         this.openPage(p, 1);
+    }
+
+    @Override
+    public void switchMenu(Player p) {
+        MenuManager.getInstance().getOpenMenus().remove(p);
+        this.open(p);
     }
 
     /**
