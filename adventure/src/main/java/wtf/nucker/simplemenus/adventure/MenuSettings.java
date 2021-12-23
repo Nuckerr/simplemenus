@@ -28,10 +28,10 @@ public class MenuSettings {
         this.noLastPageMessage = Component.text("There is previous page").color(NamedTextColor.RED);
         this.noNextPageMessage = Component.text("There is no next page").color(NamedTextColor.RED);
 
-        if(Material.valueOf("BLACK_STAINED_GLASS_PANE") == null) {
-            defaultFillerItem = new ItemBuilder().setType(Material.valueOf("STAINED_GLASS_PANE")).setData(DyeColor.BLACK.getDyeData()).setName("").build();
-        }else {
+        try {
             defaultFillerItem = new ItemBuilder().setType(Material.BLACK_STAINED_GLASS).setName("").build();
+        }catch (NullPointerException e) {
+            defaultFillerItem = new ItemBuilder().setType(Material.valueOf("STAINED_GLASS_PANE")).setData(DyeColor.BLACK.getDyeData()).setName("").build();
         }
 
         this.previousPageItem = new ItemBuilder().setType(Material.PAPER).setName("&aPrevious Page").setLore("&7Click to go to the previous page").build();

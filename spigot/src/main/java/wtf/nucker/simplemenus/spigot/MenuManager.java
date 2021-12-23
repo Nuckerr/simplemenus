@@ -29,13 +29,17 @@ public class MenuManager {
      * Initiates the menu system
      * @param plugin your plugin instance/main class
      */
-    public MenuManager(Plugin plugin) {
+    public MenuManager(Plugin plugin, MenuSettings settings) {
         instance = this;
 
-        this.settings = new MenuSettings();
+        this.settings = settings;
         this.buttons = new HashMap<>();
         this.openMenus = new HashMap<>();
         plugin.getServer().getPluginManager().registerEvents(this.getListener(), plugin);
+    }
+
+    public MenuManager(Plugin plugin) {
+        this(plugin, new MenuSettings());
     }
 
     private Listener getListener() {

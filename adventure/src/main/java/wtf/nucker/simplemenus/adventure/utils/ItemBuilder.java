@@ -46,6 +46,16 @@ public class ItemBuilder {
         return this;
     }
 
+    public ItemBuilder setLore(List<Component> lore) {
+        this.lore = lore;
+        return this;
+    }
+
+    public ItemBuilder setLore(Component... lore) {
+        this.lore = Arrays.asList(lore);
+        return this;
+    }
+
     /**
      * Wll set the lore (it is translated)
      * @see ItemBuilder#setLore(List) to set a list of strings
@@ -54,20 +64,6 @@ public class ItemBuilder {
     public ItemBuilder setLore(String... lore) {
         List<Component> res = new ArrayList<>();
         Arrays.asList(lore).forEach(line -> {
-            res.add(Component.text(line));
-        });
-        this.lore = res;
-        return this;
-    }
-
-    /**
-     * Wll set the lore (it is translated)
-     * @see ItemBuilder#setLore(String...)  to set a sttring arrayas the lore
-     * @param lore the lore you are setting
-     */
-    public ItemBuilder setLore(List<String> lore) {
-        List<Component> res = new ArrayList<>();
-        lore.forEach(line -> {
             res.add(Component.text(line));
         });
         this.lore = res;
