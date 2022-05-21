@@ -30,7 +30,7 @@ public class MenuSettings {
 
         try {
             defaultFillerItem = new ItemBuilder().setType(Material.BLACK_STAINED_GLASS).setName("").build();
-        }catch (NullPointerException e) {
+        }catch (NoSuchFieldError e) {
             defaultFillerItem = new ItemBuilder().setType(Material.valueOf("STAINED_GLASS_PANE")).setData(DyeColor.BLACK.getDyeData()).setName("").build();
         }
 
